@@ -9,6 +9,9 @@ source myenv/bin/activate
 # Install the RPLCD package
 pip install RPLCD
 
+# Install smbus2 package
+pip install smbus2
+
 # Notify the user
 echo "Virtual environment 'myenv' created and RPLCD installed."
 
