@@ -1,6 +1,0 @@
-Note, this is a 16x2 display
-1. Enable interface options in raspi-config
-2. Setup virtual python environment: 
-	python3 -m venv myenv
-	source myenv/bin/activate
-	pip install RPLCD
