@@ -3,6 +3,8 @@ import time
 
 # Modify the I2C address (0x27) if necessary
 lcd = CharLCD('PCF8574', 0x27, cols=16, rows=2)
+LCD_COLS = 16
+LCD_ROWS = 2
 
 def wrap_text(text, line_length):
     lines = []
@@ -16,12 +18,17 @@ def wrap_text(text, line_length):
     lines.append(text)
     return lines
 
-def display_text(lcd, text):
+def display_text(lcd, text, cols, rows):
     lcd.clear()
-    lines = wrap_text(text, lcd.width)  # Adjusted to use lcd.width instead of lcd.cols
-    for i, line in enumerate(lines[:lcd.height]):  # Adjusted to use lcd.height instead of lcd.rows
-        lcd.cursor_pos = (i, 0)
-        lcd.write_string(line)
+    lines = wrap_text(text, cols)
+    total_pages = (len(lines) + rows - 1) // rows  # Calculate number of pages needed
+    for page in range(total_pages):
+        lcd.clear()
+        for i in range(rows):
+            if page * rows + i < len(lines):
+                lcd.cursor_pos = (i, 0)
+                lcd.write_string(lines[page * rows + i])
+        time.sleep(2)
 
 def main():
     while True:
@@ -32,7 +39,7 @@ def main():
             break
 
         # Display the wrapped text on the LCD
-        display_text(lcd, user_input)
+        display_text(lcd, user_input, LCD_COLS, LCD_ROWS)
 
         # Optionally, you can wait a bit before prompting again
         time.sleep(2)
