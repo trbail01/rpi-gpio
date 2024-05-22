@@ -18,8 +18,8 @@ def wrap_text(text, line_length):
 
 def display_text(lcd, text):
     lcd.clear()
-    lines = wrap_text(text, lcd.cols)
-    for i, line in enumerate(lines[:lcd.rows]):
+    lines = wrap_text(text, lcd.width)  # Adjusted to use lcd.width instead of lcd.cols
+    for i, line in enumerate(lines[:lcd.height]):  # Adjusted to use lcd.height instead of lcd.rows
         lcd.cursor_pos = (i, 0)
         lcd.write_string(line)
 
